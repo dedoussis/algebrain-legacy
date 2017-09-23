@@ -1,7 +1,0 @@
-[17:33:02] You: setup
-[17:33:19] You: sin(x)^3/x
-[17:33:24] Sys: diff(sin(x)^3/x,x)
-[17:33:26] Sys: (x*3*sin(x)^2*cos(x)-1*sin(x)^3)/x^2
-[17:33:37] Sys: (x*3*sin(x)^2*cos(x)-sin(x)^3)/x^2
-[17:33:43] Sys: (x*3*sin(x)^2*cos(x)-sin(x)^3)/x^2
-
