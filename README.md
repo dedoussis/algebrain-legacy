@@ -21,18 +21,26 @@ functional GUI environment.
 imported history into terminal.
 * Export as .txt: Creates a .txt file of the terminal contents.
 * Close: Closes current CAS application frame window.  
+
+
 **Transformations**
 * New transformation wizard: Initiates the facility where the user can insert a set of
 rewriting rules and create a new transformation. The transformation is stored in the
 system for later use.
 * Manage Transformations: Initiates the facility where the user can preview, edit or
 delete already stored transformations.  
+
+
 **Tools**
 * Show tree: Displays the internal tree structure design of the current expression.
 * Clear terminal: Deletes terminal history.
 * Load setup: Automatically loads the pre-set transformation objects of differentiation
 and simplification, storing both of them in the transformation list of the system.  
+
+
 **Help**
 * Provides links to online documentation and user manual.  
+
+
 **About**
 * Presents software credits.  
