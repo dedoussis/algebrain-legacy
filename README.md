@@ -1,5 +1,5 @@
 # Computer Algebra System
-Computer Algebra System focusing on symbolic transformations:
+Computer Algebra System focusing on symbolic transformations
 
 ## High level description
 Symbolic computation, also called computer algebra, is a field of computational mathematics,
