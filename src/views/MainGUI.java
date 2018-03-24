@@ -359,7 +359,7 @@ public class MainGUI extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					if (transCmbBox.getItemCount()!=0){
+					if (transCmbBox.getItemCount()!=0 && workspace!=null){
 					Transformation selectTr = (Transformation) transCmbBox.getSelectedItem();
 				    ArrayList<String> qualifiers = new ArrayList<String>();
 					for (Rule i : selectTr.getRules()){
@@ -431,17 +431,10 @@ public class MainGUI extends JFrame {
 						submit(workspace,true);
 						return;
 						}
+					}				
 					}
-					
-					
-					}
-					else{
-						Object frame = null;
-						JOptionPane.showMessageDialog((Component) frame,
-						"No transformation has been selected!",
-					    "Transformation Error",
-					    JOptionPane.ERROR_MESSAGE);
-					}
+					else if (workspace!=null) showTransformationError();
+					else showWorkspaceError();
 					
 				} catch (CloneNotSupportedException | IOException e1) {
 					// TODO Auto-generated catch block
@@ -455,7 +448,7 @@ public class MainGUI extends JFrame {
 		btnTransform.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if (transCmbBox.getItemCount()!=0){
+					if (transCmbBox.getItemCount()!=0 && workspace!=null){
 					Transformation selectTr = (Transformation) transCmbBox.getSelectedItem();
 					
 					workspace = selectTr.transform(workspace);
@@ -464,13 +457,9 @@ public class MainGUI extends JFrame {
 					submit(workspace,true);
 					
 					}
-					else{
-						Object frame = null;
-						JOptionPane.showMessageDialog((Component) frame,
-						"No transformation has been selected!",
-					    "Transformation Error",
-					    JOptionPane.ERROR_MESSAGE);
-					}
+					else if (workspace!=null) showTransformationError();
+					else showWorkspaceError();
+					
 				} catch (CloneNotSupportedException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -685,11 +674,6 @@ public class MainGUI extends JFrame {
 		terminalPanel.setLayout(gl_terminalPanel);
 		contentPane.setLayout(gl_contentPane);
 		
-		
-	
-	
-		
-		
 	}
 	
 	private void submit(AbstractNode workspace, boolean sys) throws CloneNotSupportedException, IOException{
@@ -735,6 +719,7 @@ public class MainGUI extends JFrame {
 			  txtpnHistorytxtarea.setText(txtpnHistorytxtarea.getText() + line + "\n");
 			  line = in.readLine();
 			}
+			in.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -800,11 +785,7 @@ public class MainGUI extends JFrame {
 					}
 					}
 				else{
-					Object frame = null;
-					JOptionPane.showMessageDialog((Component) frame,
-					"There are no transformations stored.",
-					"Transformation Error",
-					JOptionPane.ERROR_MESSAGE);
+					showTransformationError();
 				}
 				break;
 			case "clear":
@@ -836,13 +817,7 @@ public class MainGUI extends JFrame {
 					txtpnHistorytxtarea.setText(txtpnHistorytxtarea.getText() + "["+timeStamp+"] Sys: "+ workspace + "\n");
 					
 					}
-					else{
-						Object frame = null;
-						JOptionPane.showMessageDialog((Component) frame,
-						"No transformation has been selected!",
-					    "Transformation Error",
-					    JOptionPane.ERROR_MESSAGE);
-					}
+					else showTransformationError();
 				} catch (CloneNotSupportedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -884,7 +859,6 @@ public class MainGUI extends JFrame {
 			
 			((DefaultComboBoxModel<Transformation>) model).addElement(trans);
 		}
-		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -905,6 +879,22 @@ public class MainGUI extends JFrame {
 		String text = scanner.useDelimiter("\\A").next();
 		scanner.close();
 		return text;
+	}
+	
+	public void showTransformationError(){
+		Object frame = null;
+		JOptionPane.showMessageDialog((Component) frame,
+		"No transformation has been selected!",
+	    "Transformation Error",
+	    JOptionPane.ERROR_MESSAGE);
+	}
+	
+	public void showWorkspaceError(){
+		Object frame = null;
+		JOptionPane.showMessageDialog((Component) frame,
+		"Workspace is empty!",
+	    "Workspace Error",
+	    JOptionPane.ERROR_MESSAGE);
 	}
 	
 }
