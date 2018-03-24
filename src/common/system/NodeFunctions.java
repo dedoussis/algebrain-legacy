@@ -381,9 +381,7 @@ public class NodeFunctions {
     }
     
     public static boolean evalDepends(AbstractNode expr, AbstractNode onWhat) throws CloneNotSupportedException{
-    	
-    
-			
+    			
 			if (isNum(expr) || isNum(onWhat)) return false;
 			else {
 				if (match(expr, onWhat)!=null) return true;
@@ -397,11 +395,6 @@ public class NodeFunctions {
 				return false;
 				}
 			}
-		
-			
-	
-		 
-    	
     
     }
 	

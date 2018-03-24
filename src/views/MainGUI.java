@@ -273,7 +273,6 @@ public class MainGUI extends JFrame {
 		
 		mntmPaste.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
 				txtrActiveStrTxtArea.paste();
 			}
 		});
