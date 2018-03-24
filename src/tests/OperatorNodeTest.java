@@ -1,4 +1,4 @@
-package testing;
+package tests;
 
 import static org.junit.Assert.*;
 
@@ -18,10 +18,6 @@ public class OperatorNodeTest {
 	public static OperatorNode ope2 = null;
 	public static OperatorNode ope3 = null;
 	public static OperatorNode ope4 = null;
-	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
 	
 
 	@Before
