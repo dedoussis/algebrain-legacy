@@ -875,16 +875,17 @@ public class MainGUI extends JFrame {
 		}
 		
 		if (!created){
-			
-		String diffrules = readFile("transformations/differentiation_rules.txt");
-		String simplrules = readFile("transformations/simplification_rules.txt");
-	   
 		try {
-		Transformation diff = new Transformation(NodeFunctions.textToArray(diffrules));
-		Transformation simpl = new Transformation(NodeFunctions.textToArray(simplrules));
+			
+		File file = new File("transformations/.");
+		for(String fileName : file.list()) {
+
+			String fileRules = readFile("transformations/" + fileName);
+			Transformation trans = new Transformation(NodeFunctions.textToArray(fileRules));
+			
+			((DefaultComboBoxModel<Transformation>) model).addElement(trans);
+		}
 		
-		((DefaultComboBoxModel<Transformation>) model).addElement(diff);
-		((DefaultComboBoxModel<Transformation>) model).addElement(simpl);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
