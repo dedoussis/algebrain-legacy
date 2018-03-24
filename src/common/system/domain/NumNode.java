@@ -1,4 +1,4 @@
-package common.system;
+package common.system.domain;
 
 public final class NumNode extends AbstractNode {
 	

@@ -1,15 +1,14 @@
-package tests;
+package tests.domain;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import common.system.VarNode;
+import common.system.domain.VarNode;
 
 public class VarNodeTest {
-	public static VarNode var1 = null;
-	public static VarNode var2 = null;
+	private VarNode var1, var2 = null;
 
 	@Before
 	public void setUp() throws Exception {

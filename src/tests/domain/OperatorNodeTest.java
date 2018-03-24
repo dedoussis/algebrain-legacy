@@ -1,4 +1,4 @@
-package tests;
+package tests.domain;
 
 import static org.junit.Assert.*;
 
@@ -9,16 +9,12 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import common.system.AbstractNode;
-import common.system.OperatorNode;
+import common.system.domain.AbstractNode;
+import common.system.domain.OperatorNode;
 
 public class OperatorNodeTest {
 	
-	public static OperatorNode ope1 = null;
-	public static OperatorNode ope2 = null;
-	public static OperatorNode ope3 = null;
-	public static OperatorNode ope4 = null;
-	
+	private OperatorNode ope1, ope2, ope3, ope4 = null;
 
 	@Before
 	public void setUp() throws Exception {

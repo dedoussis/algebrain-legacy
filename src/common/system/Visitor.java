@@ -11,8 +11,14 @@ import common.parser.ExprParser.EqualityContext;
 import common.parser.ExprParser.OpcondContext;
 import common.parser.ExprParser.TruefalseContext;
 import common.parser.ExprParser.UnaryContext;
+import common.system.domain.AbstractNode;
+import common.system.domain.DollarNode;
+import common.system.domain.NumNode;
+import common.system.domain.OperatorNode;
+import common.system.domain.Rule;
+import common.system.domain.VarNode;
 
-public class MyVisitor extends ExprBaseVisitor<AbstractNode> {
+public class Visitor extends ExprBaseVisitor<AbstractNode> {
 
 	
 	

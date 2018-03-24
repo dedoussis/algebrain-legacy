@@ -1,4 +1,4 @@
-package common.system;
+package common.system.domain;
 
 public final class DollarNode extends AbstractNode implements Comparable<DollarNode>{
 	

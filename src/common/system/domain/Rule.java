@@ -1,4 +1,4 @@
-package common.system;
+package common.system.domain;
 
 public final class Rule extends AbstractNode {
 	private AbstractNode lhs;

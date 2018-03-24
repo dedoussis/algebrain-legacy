@@ -1,4 +1,6 @@
-package common.system;
+package common.system.domain;
+
+import common.system.NodeFunctions;
 
 public abstract class AbstractNode implements Cloneable{
 	/* (non-Javadoc)

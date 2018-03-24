@@ -1,4 +1,4 @@
-package tests;
+package tests.domain;
 
 import static org.junit.Assert.*;
 
@@ -6,11 +6,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import common.system.DollarNode;
+import common.system.domain.DollarNode;
 
 public class DollarNodeTest {
-	public static DollarNode dol1 = null;
-	public static DollarNode dol2 = null;
+	private DollarNode dol1, dol2 = null;
+	
 	@Before
 	public void setUp() throws Exception {
 		dol1 = new DollarNode("a");

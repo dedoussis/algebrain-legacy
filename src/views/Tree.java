@@ -6,8 +6,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import common.system.AbstractNode;
 import common.system.NodeFunctions;
+import common.system.domain.AbstractNode;
 
 import java.awt.Font;
 

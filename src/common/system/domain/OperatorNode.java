@@ -1,4 +1,4 @@
-package common.system;
+package common.system.domain;
 
 import java.util.ArrayList;
 

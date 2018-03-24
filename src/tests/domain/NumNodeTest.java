@@ -1,20 +1,19 @@
-package tests;
+package tests.domain;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import common.system.DollarNode;
-import common.system.NumNode;
+import common.system.domain.DollarNode;
+import common.system.domain.NumNode;
 
 public class NumNodeTest {
-	public static NumNode num1 = null;
-	public static NumNode num2 = null;
+	private NumNode num1 = null;
+
 	@Before
 	public void setUp() throws Exception {
 		num1 = new NumNode(5);
-		num2 = new NumNode(23);
 	}
 
 	@Test

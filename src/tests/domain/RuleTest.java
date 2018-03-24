@@ -1,23 +1,22 @@
-package tests;
+package tests.domain;
 
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import common.system.DollarNode;
-import common.system.NumNode;
-import common.system.OperatorNode;
-import common.system.Rule;
-import common.system.VarNode;
+import common.system.domain.DollarNode;
+import common.system.domain.NumNode;
+import common.system.domain.OperatorNode;
+import common.system.domain.Rule;
+import common.system.domain.VarNode;
 
 public class RuleTest {
-	OperatorNode ope1 = null;
-	OperatorNode ope2 = null;
-	VarNode var1 = null;
-	DollarNode dol1 = null;
-	NumNode num1 = null;
-	Rule rul1 = null;
+	private OperatorNode ope1, ope2 = null;
+	private VarNode var1 = null;
+	private DollarNode dol1 = null;
+	private NumNode num1 = null;
+	private Rule rul1 = null;
 	@Before
 	public void setUp() throws Exception {
 		ope1 = new OperatorNode("diff");

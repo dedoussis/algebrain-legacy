@@ -20,12 +20,12 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.border.TitledBorder;
 
-import common.system.AbstractNode;
 import common.system.NodeFunctions;
-import common.system.OperatorNode;
-import common.system.Rule;
-import common.system.Transformation;
-import common.system.VarNode;
+import common.system.domain.AbstractNode;
+import common.system.domain.OperatorNode;
+import common.system.domain.Rule;
+import common.system.domain.Transformation;
+import common.system.domain.VarNode;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;

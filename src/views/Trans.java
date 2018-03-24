@@ -19,8 +19,8 @@ import java.awt.Dimension;
 import javax.swing.border.LineBorder;
 
 import common.system.NodeFunctions;
-import common.system.Rule;
-import common.system.Transformation;
+import common.system.domain.Rule;
+import common.system.domain.Transformation;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;

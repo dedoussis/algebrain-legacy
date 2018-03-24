@@ -16,6 +16,12 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import common.parser.ExprLexer;
 import common.parser.ExprParser;
+import common.system.domain.AbstractNode;
+import common.system.domain.DollarNode;
+import common.system.domain.NumNode;
+import common.system.domain.OperatorNode;
+import common.system.domain.Rule;
+import common.system.domain.VarNode;
 
 public class NodeFunctions {
 	
@@ -414,14 +420,11 @@ public class NodeFunctions {
 				opeNode.getChildren().set(i,rewrite(opeNode.getChildren().get(i), Map));
 			}
 			return opeNode;
-    		//output = opeNode;
     	}
     	return output;
     }
     
 public static AbstractNode expressionToNode(String expression) throws IOException{
-		
-
 		InputStream stream = new ByteArrayInputStream(expression.getBytes(StandardCharsets.UTF_8));
 		
 		ANTLRInputStream input = new ANTLRInputStream(stream);
@@ -432,7 +435,7 @@ public static AbstractNode expressionToNode(String expression) throws IOExceptio
 		ParseTree tree = parser.expr();
 		
 		
-		MyVisitor visitor = new MyVisitor();
+		Visitor visitor = new Visitor();
 		AbstractNode rootNode = visitor.visit(tree);
 		
 		return rootNode;
@@ -453,7 +456,7 @@ public static ArrayList<Rule> textToArray(String rules) throws IOException{
 		ParseTree tree = parser.expr();
 		
 		stream.close();
-		MyVisitor visitor = new MyVisitor();
+		Visitor visitor = new Visitor();
 		AbstractNode rootNode = visitor.visit(tree);
 		
 		ruleList.add((Rule) rootNode);
