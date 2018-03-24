@@ -15,21 +15,21 @@ public final class Rule extends AbstractNode {
 	 * @return the lhs
 	 */
 	public AbstractNode getLhs() {
-		return lhs;
+		return this.lhs;
 	}
 
 	/**
 	 * @return the rhs
 	 */
 	public AbstractNode getRhs() {
-		return rhs;
+		return this.rhs;
 	}
 
 	/**
 	 * @return the condition
 	 */
 	public OperatorNode getCondition() {
-		return condition;
+		return this.condition;
 	}
 
 	/**
