@@ -1,6 +1,5 @@
 package views;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,14 +8,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
 import javax.swing.ActionMap;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.InputMap;
-import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 import javax.swing.border.TitledBorder;
 
@@ -35,11 +32,9 @@ import java.awt.Component;
 
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import javax.swing.SwingUtilities;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -67,19 +62,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.Scanner;
 import java.util.Stack;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import javax.swing.event.CaretListener;
-import javax.swing.event.CaretEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
-import javax.swing.JInternalFrame;
 import javax.swing.JLabel;
 
 public class MainGUI extends JFrame {
@@ -92,7 +83,6 @@ public class MainGUI extends JFrame {
 	private AbstractNode workspace;
 	private static final String TEXT_SUBMIT = "text-submit";
 	private static final String INSERT_BREAK = "insert-break";
-	private static final Object GO_BACK = null;
 	private JMenuItem mntmClearTerminal;
 	private JMenuItem mntmCopy;
 	private JMenuItem mntmPaste;
@@ -344,7 +334,12 @@ public class MainGUI extends JFrame {
 		
 		mntmLoadSetup.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setup();
+				try {
+					setup();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		
@@ -477,7 +472,7 @@ public class MainGUI extends JFrame {
 					    "Transformation Error",
 					    JOptionPane.ERROR_MESSAGE);
 					}
-				} catch (CloneNotSupportedException e1) {
+				} catch (CloneNotSupportedException | IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
@@ -698,7 +693,7 @@ public class MainGUI extends JFrame {
 		
 	}
 	
-	private void submit(AbstractNode workspace, boolean sys) throws CloneNotSupportedException{
+	private void submit(AbstractNode workspace, boolean sys) throws CloneNotSupportedException, IOException{
 		String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new Date());
 		
 		
@@ -780,7 +775,7 @@ public class MainGUI extends JFrame {
 		timer.schedule(myTask, 10000, 10000);
 	}
 	
-	public void printCommand(AbstractNode workspace){
+	public void printCommand(AbstractNode workspace) throws IOException{
 		String extra = "";
 		if (NodeFunctions.isVar(workspace)){
 			switch (((VarNode) workspace).getKey()){
@@ -873,57 +868,27 @@ public class MainGUI extends JFrame {
 		
 	}
 	
-	public void setup(){
-		boolean go = true;
+	public void setup() throws IOException{
+		boolean created = false;
 		for (int i=0; i<model.getSize(); i++){
-			if (model.getElementAt(i).toString().matches("diff|simpl")) go = false;
+			if (model.getElementAt(i).toString().matches("diff|simpl")) created = true;
 		}
 		
-		if (go){
-		String diffrules = "diff($a+$b,$v)=diff($a,$v)+diff($b,$v) \n"
-					     + "diff($a-$b,$v)=diff($a,$v)-diff($b,$v)\n"
-					     + "diff($a*$b,$v)=diff($a,$v)*$b+diff($b,$v)*$a \n"
-					     + "diff($a/$b,$v)=(diff($a,$v)*$b-diff($b,$v)*$a)/$b^2 \n"
-					     + "diff($a^$b,$v)=$b*$a^($b-1)*diff($a,$v) \n"
-					     + "diff(sin($v),$v)=cos($v) \n"
-					     + "diff(cos($v),$v)=0-sin($v) \n"
-					     + "diff(tan($v),$v)=1+tan($v)^2 \n"
-					     + "diff($u, $v)=0 if is_const($u) OR NOT(depends($u,$v)) \n"
-					     + "diff($v, $v)=1 \n"
-					     + "diff(-$v,$v)=-1 \n"
-					     + "ndiff($e,1)=diff($e,x) \n"
-					     + "ndiff($e,$n)=ndiff(diff($e,x),$n-1)";
-		
-	   String simplrules = "simpl($s)=$s if is_const($s) \n"
-						 + "$s+0=$s \n"
-						 + "0+$s=$s \n"
-						 + "$s-0=$s \n"
-						 + "$s*0=0 \n"
-						 + "0*$s=0 \n"
-						 + "$s*1=$s \n"
-						 + "1*$s=$s \n"
-						 + "0/$s=0 \n"
-						 + "$s^0=1 \n"
-						 + "$s^1=$s \n"
-						 + "0^$s=0 \n"
-						 + "$s-$s=0 \n"
-						 + "$s/$s=1 \n"
-						 + "simpl($s+$k)=$s+$k \n"
-						 + "simpl($s-$k)=$s-$k\n"
-						 + "simpl($s*$k)=$s*$k \n"
-						 + "simpl($s/$k)=$s/$k \n"
-						 + "simpl($s^$k)=$s^$k \n";
+		if (!created){
+			
+		String diffrules = readFile("transformations/differentiation_rules.txt");
+		String simplrules = readFile("transformations/simplification_rules.txt");
 	   
-	   try {
+		try {
 		Transformation diff = new Transformation(NodeFunctions.textToArray(diffrules));
 		Transformation simpl = new Transformation(NodeFunctions.textToArray(simplrules));
 		
 		((DefaultComboBoxModel<Transformation>) model).addElement(diff);
 		((DefaultComboBoxModel<Transformation>) model).addElement(simpl);
-	   } catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	   }
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		}
 		else {
 			Object frame = null;
@@ -933,6 +898,13 @@ public class MainGUI extends JFrame {
 		    JOptionPane.ERROR_MESSAGE);
 		}
 		
+	}
+	
+	public String readFile(String fileName) throws IOException {
+		Scanner scanner = new Scanner(new FileReader(fileName));
+		String text = scanner.useDelimiter("\\A").next();
+		scanner.close();
+		return text;
 	}
 	
 }
