@@ -44,6 +44,7 @@ Detailed insights on how Algebrain works as well as help to get you started with
 ### Future Work
 
 * Adding support of floating point values. The current prototype supports integers only. (Prioritised)
+* Handle faulty inifinite looping transformations. (Prioritised)
 * Enabling a variety of transformation strategies. Currently transformations are performed using a top-to-bottom approach. Even though this is efficient for a lot of transormations, there are transformations for which a botton-to-top approach would be more efficient. System to adapt strategy with regards to nature of transformation.
 * As a further ambition, abandon the GUI implementation, and proceed with a complete API integration of the system.
 
