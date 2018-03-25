@@ -1,46 +1,53 @@
-# Computer Algebra System
-Computer Algebra System focusing on symbolic transformations
+# Algebrain
 
-## High level description
-Symbolic computation, also called computer algebra, is a field of computational mathematics,
-which refers to algorithms and software systems designed explicitly for the manipulation
-of symbolic expressions. Computer algebra systems are software packages specialised
-in symbolic computation. Apart from numerically evaluating algebraic expressions, these
-systems are capable of applying transformations such as differentiation or simplification
-on a given expression. This project investigates the extend to which this transformation
-feature can be approached from a more dynamic and user-oriented perspective. Rewriting
-methods are employed to allow the user to define a customised transformation applicable
-on any symbolic expression. The system implemented enables the user to represent, handle
-and manipulate symbolic expressions using custom transformations within a friendly and
-functional GUI environment.
+Algebrain is a general purposed Computer Algebra System, that allows numerical evaluation and symbolic transofrmation of algebraic expressions. By exploiting the concept of rewriting rules, Algebrain enables the use of custom transformations, that can be entirely developed and compiled within its environment.  
 
-## System features
-**File**
-* New: Initiates a new CAS application frame window.
-* Import: Imports a .txt file of a previous exported terminal history. Loads the
-imported history into terminal.
-* Export as .txt: Creates a .txt file of the terminal contents.
-* Close: Closes current CAS application frame window.  
+## Getting Started
 
+### Prerequisites
 
-**Transformations**
-* New transformation wizard: Initiates the facility where the user can insert a set of
-rewriting rules and create a new transformation. The transformation is stored in the
-system for later use.
-* Manage Transformations: Initiates the facility where the user can preview, edit or
-delete already stored transformations.  
+* Java 1.8
+* Maven 3.5.3
 
+### Setup
 
-**Tools**
-* Show tree: Displays the internal tree structure design of the current expression.
-* Clear terminal: Deletes terminal history.
-* Load setup: Automatically loads the pre-set transformation objects of differentiation
-and simplification, storing both of them in the transformation list of the system.  
+The following commands will get the project up and running for development:
+``` bash
+# Clone project
+git clone https://github.com/dedoussis/algebrain.git
+cd algebrain
 
+# Install dependencies and compile
+mvn compile
+```
 
-**Help**
-* Provides links to online documentation and user manual.  
+Runnable JAR for distribution:  
+``` bash
+# Create a runnable JAR and install it in your local repository
+mvn install
+```
 
+## Run Unit Tests
 
-**About**
-* Presents software credits.  
+``` bash
+mvn test
+```
+
+## Project Background
+
+The core of the project has been produced during the 4-month dissertation period of my masters degree. Since then I've been working on Algebrain as a side project, improving the code-base now and then. Suggestions and contributions are greatly appreciated.  
+
+### Userguide
+
+Detailed insights on how Algebrain works as well as help to get you started with the syntax of the Algebrain language can be found within the userguide document of this repository. 
+
+### Future Work
+
+* Adding support of floating point values. The current prototype supports integers only. (Prioritised)
+* Enabling a variety of transformation strategies. Currently transformations are performed using a top-to-bottom approach. Even though this is efficient for a lot of transormations, there are transformations for which a botton-to-top approach would be more efficient. System to adapt strategy with regards to nature of transformation.
+* As a further ambition, abandon the GUI implementation, and proceed with a complete API integration of the system.
+
+## Built With
+
+* [ANTLR4](http://www.antlr.org/) - Parsing
+* [Maven](https://maven.apache.org/) - Dependency Management
