@@ -459,7 +459,7 @@ public class MainGUI extends JFrame {
 	private void initComponents() {
 		ClassLoader classLoader = getClass().getClassLoader();
 		setIconImage(Toolkit.getDefaultToolkit().getImage(classLoader.getResource("images/icon_128.png")));
-		setTitle("Computer Algebra System");
+		setTitle("Algebrain");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 850, 600);

@@ -7,11 +7,12 @@
    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   <groupId>common</groupId>
-  <artifactId>cas</artifactId>
+  <artifactId>algebrain</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>cas</name>
-  <url>http://maven.apache.org</url>
+  <name>Algebrain</name>
+  <url>https://github.com/dedoussis/algebrain</url>
+  <description>Computer Algebra System focusing on symbolic transformations</description>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>

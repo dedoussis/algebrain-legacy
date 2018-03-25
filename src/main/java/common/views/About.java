@@ -19,7 +19,7 @@ public class About extends JPanel {
 	public About() {
 		
 		
-		JLabel lblComputerAlgebraSystem = new JLabel("Computer Algebra System");
+		JLabel lblComputerAlgebraSystem = new JLabel("Algebrain");
 		lblComputerAlgebraSystem.setHorizontalAlignment(SwingConstants.CENTER);
 		lblComputerAlgebraSystem.setHorizontalTextPosition(SwingConstants.CENTER);
 		
