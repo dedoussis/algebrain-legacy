@@ -1,7 +1,6 @@
-package views;
+package common.views;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -33,8 +32,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 
 import javax.swing.JComboBox;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.MatteBorder;
 
 public class Trans extends JDialog {
 
@@ -281,7 +278,7 @@ public class Trans extends JDialog {
 			managePanel.setBorder(new LineBorder(Color.LIGHT_GRAY, 1, true));
 			tabSpace.addTab("Manage Transformations", null, managePanel, null);
 			JLabel lblSelectTransformation = new JLabel("Select Transformation:");
-			selectCmbBox = new JComboBox();
+			selectCmbBox = new JComboBox<Transformation>();
 			selectCmbBox.setModel(model);
 			selectCmbBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

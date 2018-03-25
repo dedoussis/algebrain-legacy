@@ -1,4 +1,4 @@
-package views;
+package common.views;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -34,7 +34,9 @@ public class About extends JPanel {
 		
 		JLabel lblNewLabel = new JLabel("");
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setIcon(new ImageIcon(About.class.getResource("/resources/antlr.png")));
+		
+		ClassLoader classLoader = getClass().getClassLoader();
+		lblNewLabel.setIcon(new ImageIcon(classLoader.getResource("images/antlr.png")));
 		
 		JLabel lblAntlrUsedFor = new JLabel("ANTLR4 used for parsing.");
 		lblAntlrUsedFor.setHorizontalAlignment(SwingConstants.CENTER);

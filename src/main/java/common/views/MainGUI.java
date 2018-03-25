@@ -1,4 +1,4 @@
-package views;
+package common.views;
 
 import java.awt.EventQueue;
 
@@ -16,6 +16,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.InputMap;
 import javax.swing.KeyStroke;
 import javax.swing.border.TitledBorder;
+
+import java.io.InputStream;
 
 import common.system.NodeFunctions;
 import common.system.domain.AbstractNode;
@@ -149,7 +151,7 @@ public class MainGUI extends JFrame {
 		KeyStroke shiftEnter = KeyStroke.getKeyStroke("shift ENTER");
 		KeyStroke up = KeyStroke.getKeyStroke("UP");
 		input.put(shiftEnter, INSERT_BREAK); // input.get(enter)) =
-												// "insert-break"
+		// "insert-break"
 		input.put(enter, TEXT_SUBMIT);
 		input.put(up, 5);
 
@@ -455,8 +457,8 @@ public class MainGUI extends JFrame {
 	}
 
 	private void initComponents() {
-
-		setIconImage(Toolkit.getDefaultToolkit().getImage(MainGUI.class.getResource("/resources/icon_128.png")));
+		ClassLoader classLoader = getClass().getClassLoader();
+		setIconImage(Toolkit.getDefaultToolkit().getImage(classLoader.getResource("images/icon_128.png")));
 		setTitle("Computer Algebra System");
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -582,33 +584,33 @@ public class MainGUI extends JFrame {
 		activeTxtPane.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		GroupLayout gl_terminalPanel = new GroupLayout(terminalPanel);
 		gl_terminalPanel
-				.setHorizontalGroup(gl_terminalPanel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_terminalPanel.createSequentialGroup().addContainerGap()
-								.addGroup(gl_terminalPanel.createParallelGroup(Alignment.LEADING)
-										.addGroup(gl_terminalPanel.createSequentialGroup()
-												.addComponent(activeTxtPane, GroupLayout.DEFAULT_SIZE, 816,
-														Short.MAX_VALUE)
-												.addContainerGap())
-										.addGroup(Alignment.TRAILING,
-												gl_terminalPanel.createSequentialGroup()
-														.addComponent(historyScrollPane, GroupLayout.DEFAULT_SIZE, 816,
-																Short.MAX_VALUE)
-														.addContainerGap())
-										.addGroup(Alignment.TRAILING, gl_terminalPanel.createSequentialGroup()
-												.addComponent(btnClearActiveString)
-												.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnEnter)))));
+		.setHorizontalGroup(gl_terminalPanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_terminalPanel.createSequentialGroup().addContainerGap()
+						.addGroup(gl_terminalPanel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_terminalPanel.createSequentialGroup()
+										.addComponent(activeTxtPane, GroupLayout.DEFAULT_SIZE, 816,
+												Short.MAX_VALUE)
+										.addContainerGap())
+								.addGroup(Alignment.TRAILING,
+										gl_terminalPanel.createSequentialGroup()
+										.addComponent(historyScrollPane, GroupLayout.DEFAULT_SIZE, 816,
+												Short.MAX_VALUE)
+										.addContainerGap())
+								.addGroup(Alignment.TRAILING, gl_terminalPanel.createSequentialGroup()
+										.addComponent(btnClearActiveString)
+										.addPreferredGap(ComponentPlacement.RELATED).addComponent(btnEnter)))));
 		gl_terminalPanel
-				.setVerticalGroup(
-						gl_terminalPanel.createParallelGroup(Alignment.TRAILING)
-								.addGroup(gl_terminalPanel.createSequentialGroup().addContainerGap()
-										.addComponent(historyScrollPane, GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
-										.addPreferredGap(ComponentPlacement.RELATED)
-										.addComponent(activeTxtPane, GroupLayout.PREFERRED_SIZE, 51,
-												GroupLayout.PREFERRED_SIZE)
-										.addGap(18)
-										.addGroup(gl_terminalPanel.createParallelGroup(Alignment.BASELINE)
-												.addComponent(btnEnter).addComponent(btnClearActiveString))
-										.addContainerGap()));
+		.setVerticalGroup(
+				gl_terminalPanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_terminalPanel.createSequentialGroup().addContainerGap()
+						.addComponent(historyScrollPane, GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+						.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(activeTxtPane, GroupLayout.PREFERRED_SIZE, 51,
+								GroupLayout.PREFERRED_SIZE)
+						.addGap(18)
+						.addGroup(gl_terminalPanel.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnEnter).addComponent(btnClearActiveString))
+						.addContainerGap()));
 
 		txtrActiveStrTxtArea = new JTextArea();
 
@@ -673,8 +675,8 @@ public class MainGUI extends JFrame {
 		try {
 			JFileChooser chooser = new JFileChooser();
 			int returnVal = chooser.showOpenDialog(null); // replace null with
-															// your swing
-															// container
+			// your swing
+			// container
 			File file = null;
 			if (returnVal == JFileChooser.APPROVE_OPTION)
 				file = chooser.getSelectedFile();
@@ -819,13 +821,13 @@ public class MainGUI extends JFrame {
 
 		if (!created) {
 			try {
+				String[] fileNames = {"differentiation_rules.txt", "fibonacci_rules.txt", "simplification_rules.txt"}; 
+				for (String fileName : fileNames) {
+					InputStream fileStream = getResourceAsStream("/transformations/"+fileName); 
+					String fileRules = streamToString(fileStream);
+					fileStream.close();
 
-				File file = new File("transformations/.");
-				for (String fileName : file.list()) {
-
-					String fileRules = readFile("transformations/" + fileName);
 					Transformation trans = new Transformation(NodeFunctions.textToArray(fileRules));
-
 					((DefaultComboBoxModel<Transformation>) model).addElement(trans);
 				}
 			} catch (IOException e) {
@@ -840,8 +842,19 @@ public class MainGUI extends JFrame {
 
 	}
 
-	public String readFile(String fileName) throws IOException {
-		Scanner scanner = new Scanner(new FileReader(fileName));
+	private InputStream getResourceAsStream( String resource ) {
+		final InputStream in
+		= getContextClassLoader().getResourceAsStream( resource );
+
+		return in == null ? getClass().getResourceAsStream( resource ) : in;
+	}
+
+	private ClassLoader getContextClassLoader() {
+		return Thread.currentThread().getContextClassLoader();
+	}
+
+	public String streamToString(InputStream fileStream) throws IOException {
+		Scanner scanner = new Scanner(fileStream, "UTF-8");
 		String text = scanner.useDelimiter("\\A").next();
 		scanner.close();
 		return text;

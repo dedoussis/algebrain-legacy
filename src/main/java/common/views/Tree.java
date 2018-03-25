@@ -1,4 +1,4 @@
-package views;
+package common.views;
 
 import javax.swing.JPanel;
 import javax.swing.GroupLayout;
