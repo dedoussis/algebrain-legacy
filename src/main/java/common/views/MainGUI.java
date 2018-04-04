@@ -85,6 +85,8 @@ public class MainGUI extends JFrame {
 	private AbstractNode workspace;
 	private static final String TEXT_SUBMIT = "text-submit";
 	private static final String INSERT_BREAK = "insert-break";
+	private static final int PREVIOUS_COMMAND = 5;
+	private int historyIndex = 1;
 	private JMenuItem mntmClearTerminal;
 	private JMenuItem mntmCopy;
 	private JMenuItem mntmPaste;
@@ -96,8 +98,7 @@ public class MainGUI extends JFrame {
 	private JComboBox<Transformation> transCmbBox;
 	private JButton btnTransform;
 	private JButton btnAddOpe;
-	private Stack<AbstractNode> history = new Stack<AbstractNode>();
-	private Stack<AbstractNode> tempHist = (Stack<AbstractNode>) history.clone();
+	private ArrayList<AbstractNode> history = new ArrayList<AbstractNode>();
 	private JMenuItem mntmShowTree;
 	private JMenuItem mntmCredits;
 	private JMenuItem mntmNew;
@@ -136,8 +137,6 @@ public class MainGUI extends JFrame {
 	 */
 	public MainGUI() {
 
-		background();
-
 		initComponents();
 
 		createEvents();
@@ -150,10 +149,9 @@ public class MainGUI extends JFrame {
 		KeyStroke enter = KeyStroke.getKeyStroke("ENTER");
 		KeyStroke shiftEnter = KeyStroke.getKeyStroke("shift ENTER");
 		KeyStroke up = KeyStroke.getKeyStroke("UP");
-		input.put(shiftEnter, INSERT_BREAK); // input.get(enter)) =
-		// "insert-break"
+		input.put(shiftEnter, INSERT_BREAK); 
 		input.put(enter, TEXT_SUBMIT);
-		input.put(up, 5);
+		input.put(up, PREVIOUS_COMMAND);
 
 		ActionMap actions = txtrActiveStrTxtArea.getActionMap();
 		actions.put(INSERT_BREAK, new AbstractAction() {
@@ -172,9 +170,8 @@ public class MainGUI extends JFrame {
 						workspace = NodeFunctions.expressionToNode(txtrActiveStrTxtArea.getText());
 
 						workspace = NodeFunctions.cannonical(workspace);
-						history.push(workspace);
 
-						submit(workspace, false);
+						submit(workspace, "You");
 						txtrActiveStrTxtArea.setText("");
 
 					} else {
@@ -194,15 +191,15 @@ public class MainGUI extends JFrame {
 
 		});
 
-		actions.put(5, new AbstractAction() {
+		actions.put(PREVIOUS_COMMAND, new AbstractAction() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
-				if (!tempHist.isEmpty())
-					txtrActiveStrTxtArea.setText(NodeFunctions.expression(tempHist.pop()));
-				else
-					tempHist = (Stack<AbstractNode>) history.clone();
-
+				if (!history.isEmpty()){
+					if (historyIndex > history.size()) historyIndex = 1;
+						
+					txtrActiveStrTxtArea.setText(NodeFunctions.expression(history.get(history.size() - historyIndex)));
+					historyIndex++;
+				}
 			}
 
 		});
@@ -213,9 +210,8 @@ public class MainGUI extends JFrame {
 					if (!txtrActiveStrTxtArea.getText().matches("")) {
 						workspace = NodeFunctions.expressionToNode(txtrActiveStrTxtArea.getText());
 						workspace = NodeFunctions.cannonical(workspace);
-						history.push(workspace);
 
-						submit(workspace, false);
+						submit(workspace, "You");
 						txtrActiveStrTxtArea.setText("");
 					} else {
 						Object frame = null;
@@ -408,13 +404,11 @@ public class MainGUI extends JFrame {
 
 								if (newWorkspace.getChildren().size() > 1) {
 									workspace = newWorkspace;
-									history.push(workspace);
-									submit(workspace, true);
+									submit(workspace, "Sys");
 								}
 							} else {
 								workspace = newWorkspace;
-								history.push(workspace);
-								submit(workspace, true);
+								submit(workspace, "Sys");
 								return;
 							}
 						}
@@ -439,8 +433,7 @@ public class MainGUI extends JFrame {
 
 						workspace = selectTr.transform(workspace);
 						workspace = NodeFunctions.cannonical(workspace);
-						history.push(workspace);
-						submit(workspace, true);
+						submit(workspace, "Sys");
 
 					} else if (workspace != null)
 						showTransformationError();
@@ -641,14 +634,10 @@ public class MainGUI extends JFrame {
 
 	}
 
-	private void submit(AbstractNode workspace, boolean sys) throws CloneNotSupportedException, IOException {
+	private void submit(AbstractNode workspace, String manipulator) throws CloneNotSupportedException, IOException {
+		history.add(workspace);
+		historyIndex = 1;
 		String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new Date());
-
-		String manipulator;
-		if (sys)
-			manipulator = "Sys";
-		else
-			manipulator = "You";
 
 		txtpnHistorytxtarea.setText(
 				txtpnHistorytxtarea.getText() + "[" + timeStamp + "] " + manipulator + ": " + workspace + "\n");
@@ -717,17 +706,6 @@ public class MainGUI extends JFrame {
 		});
 	}
 
-	public void background() {
-		Timer timer = new Timer();
-		TimerTask myTask = new TimerTask() {
-			@Override
-			public void run() {
-				tempHist = (Stack<AbstractNode>) history.clone();
-			}
-		};
-
-		timer.schedule(myTask, 10000, 10000);
-	}
 
 	public void printCommand(AbstractNode workspace) throws IOException {
 		String extra = "";
@@ -780,7 +758,7 @@ public class MainGUI extends JFrame {
 						tempHist2.pop();
 						workspace = selectTr.transform(tempHist2.peek());
 
-						history.push(workspace);
+						history.add(workspace);
 						String timeStamp = new SimpleDateFormat("HH:mm:ss").format(new Date());
 						txtpnHistorytxtarea.setText(
 								txtpnHistorytxtarea.getText() + "[" + timeStamp + "] Sys: " + workspace + "\n");
@@ -821,9 +799,9 @@ public class MainGUI extends JFrame {
 
 		if (!created) {
 			try {
-				String[] fileNames = {"differentiation_rules.txt", "fibonacci_rules.txt", "simplification_rules.txt"}; 
+				String[] fileNames = {"differentiation_rules.txt", "fibonacci_rules.txt", "simplification_rules.txt"};
 				for (String fileName : fileNames) {
-					InputStream fileStream = getResourceAsStream("/transformations/"+fileName); 
+					InputStream fileStream = getResourceAsStream("/transformations/"+fileName);
 					String fileRules = streamToString(fileStream);
 					fileStream.close();
 
