@@ -306,16 +306,6 @@ public class NodeFunctions {
 
 	public static AbstractNode eval(AbstractNode node) throws CloneNotSupportedException{
 
-		if (isNum(node)){
-			NumNode num = (NumNode) node;
-			if (num.getKey()<0){
-				OperatorNode minusOpe = new OperatorNode("-");
-				minusOpe.getChildren().add(new NumNode(num.getKey()*(-1)));
-				return minusOpe;
-			}
-
-		}
-
 		if (isOperator(node)){
 
 			OperatorNode opeNode = (OperatorNode) node;
@@ -368,8 +358,17 @@ public class NodeFunctions {
 			}
 
 			for (int i=0; i<opeNode.getChildren().size();i++){
+				if (isNum(opeNode.getChildren().get(i))){
+					NumNode num = (NumNode) opeNode.getChildren().get(i);
+					if (num.getKey()<0){
+						OperatorNode minusOpe = new OperatorNode("-");
+						minusOpe.getChildren().add(new NumNode(num.getKey()*(-1)));
+						opeNode.getChildren().set(i, minusOpe);
+					}
+				}
 				opeNode.getChildren().set(i, eval(opeNode.getChildren().get(i)));
-			}
+				}
+			
 			return opeNode;
 		}
 
