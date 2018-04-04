@@ -318,27 +318,23 @@ public class NodeFunctions {
 
 		if (isOperator(node)){
 
-
 			OperatorNode opeNode = (OperatorNode) node;
-
-
-			boolean canBeEvaluated=true;
 			for(AbstractNode i : opeNode.getChildren()){
-				if (!(isNum(i))) canBeEvaluated = false;
-				if (isOperator(i)){
+				boolean canBeEvaluated=false;
+				if (isNum(i)) canBeEvaluated = true;
+				else if (isOperator(i)){
 					OperatorNode iOpe = (OperatorNode) i;
-					if (!(iOpe.getKey().matches("\\-") && iOpe.getChildren().size()==1)) canBeEvaluated = false;
-					else if(!(isNum(iOpe.getChildren().get(0)))) canBeEvaluated = false;
-					else {
+					if ((iOpe.getKey().matches("\\-") && iOpe.getChildren().size()==1 && isNum(iOpe.getChildren().get(0)))){
 						canBeEvaluated = true;
 						NumNode iOpeChild = (NumNode) iOpe.getChildren().get(0);
 						int idx=opeNode.getChildren().indexOf(i);
-						opeNode.getChildren().set(idx, new NumNode(iOpeChild.getKey() * (-1))) ;				 
+						opeNode.getChildren().set(idx, new NumNode(iOpeChild.getKey() * (-1)));	
 					}
 				}
+				if (!canBeEvaluated) return node;
 			}
 
-			if(canBeEvaluated && opeNode.getChildren().size()==2){
+			if(opeNode.getChildren().size()==2){
 
 				NumNode left = (NumNode) opeNode.getChildren().get(0);
 				NumNode right = (NumNode) opeNode.getChildren().get(1);
