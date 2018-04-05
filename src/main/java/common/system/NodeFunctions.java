@@ -281,7 +281,6 @@ public class NodeFunctions {
 				if (evalCondition((OperatorNode)condition.getChildren().get(1))) return true;
 				else return false;}
 			else return false;
-
 		case "OR":
 			if (evalCondition((OperatorNode)condition.getChildren().get(0)) || evalCondition((OperatorNode)condition.getChildren().get(1))) return true;
 			else return false;
@@ -309,8 +308,9 @@ public class NodeFunctions {
 		if (isOperator(node)){
 
 			OperatorNode opeNode = (OperatorNode) node;
+			boolean canBeEvaluated = false;
 			for(AbstractNode i : opeNode.getChildren()){
-				boolean canBeEvaluated=false;
+				canBeEvaluated = false;
 				if (isNum(i)) canBeEvaluated = true;
 				else if (isOperator(i)){
 					OperatorNode iOpe = (OperatorNode) i;
@@ -321,10 +321,10 @@ public class NodeFunctions {
 						opeNode.getChildren().set(idx, new NumNode(iOpeChild.getKey() * (-1)));	
 					}
 				}
-				if (!canBeEvaluated) return node;
+				if (!canBeEvaluated) break;
 			}
 
-			if(opeNode.getChildren().size()==2){
+			if(canBeEvaluated && opeNode.getChildren().size()==2){
 
 				NumNode left = (NumNode) opeNode.getChildren().get(0);
 				NumNode right = (NumNode) opeNode.getChildren().get(1);
@@ -367,7 +367,7 @@ public class NodeFunctions {
 					}
 				}
 				opeNode.getChildren().set(i, eval(opeNode.getChildren().get(i)));
-				}
+			}
 			
 			return opeNode;
 		}
