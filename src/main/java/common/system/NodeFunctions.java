@@ -197,8 +197,6 @@ public class NodeFunctions {
 
 	public static HashMap<DollarNode, AbstractNode> match(AbstractNode lhs, AbstractNode node) throws CloneNotSupportedException{
 
-
-
 		HashMap<DollarNode,AbstractNode> map = new HashMap<DollarNode, AbstractNode>();
 
 		if (isNum(lhs)&&isNum(node)){
@@ -215,7 +213,6 @@ public class NodeFunctions {
 			else return null;
 		}
 		else if (isDollar(lhs)){
-			DollarNode dolLhs = (DollarNode) lhs;
 			if (map.get(lhs)!=null){
 				if (NodeFunctions.expression(map.get(lhs)).equals(NodeFunctions.expression(node))) return map;
 				else return null;

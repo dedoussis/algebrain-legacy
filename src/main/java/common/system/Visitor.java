@@ -8,9 +8,10 @@ import common.parser.ExprParser.AndorContext;
 import common.parser.ExprParser.ConstContext;
 import common.parser.ExprParser.DependsContext;
 import common.parser.ExprParser.EqualityContext;
+import common.parser.ExprParser.ExprUnaryContext;
 import common.parser.ExprParser.OpcondContext;
 import common.parser.ExprParser.TruefalseContext;
-import common.parser.ExprParser.UnaryContext;
+import common.parser.ExprParser.VarNumUnaryContext;
 import common.system.domain.AbstractNode;
 import common.system.domain.DollarNode;
 import common.system.domain.NumNode;
@@ -145,31 +146,31 @@ public class Visitor extends ExprBaseVisitor<AbstractNode> {
 		return ope;
 	}
 
-
-
-
-
 	/* (non-Javadoc)
 	 * @see common.parser.ExprBaseVisitor#visitEquality(common.parser.ExprParser.EqualityContext)
 	 */
 	@Override
 	public AbstractNode visitEquality(EqualityContext ctx) {
-		// TODO Auto-generated method stub
 		OperatorNode ope = new OperatorNode("=");
 		ope.getChildren().add(visit(ctx.expr(0)));
 		ope.getChildren().add(visit(ctx.expr(1)));
 		return ope;
 	}
 
-	/* (non-Javadoc)
-	 * @see common.parser.ExprBaseVisitor#visitUnary(common.parser.ExprParser.UnaryContext)
-	 */
 	@Override
-	public AbstractNode visitUnary(UnaryContext ctx) {
-		// TODO Auto-generated method stub
-		
+	public AbstractNode visitExprUnary(ExprUnaryContext ctx) {
 		OperatorNode unaryOpe = new OperatorNode("-");
 		unaryOpe.getChildren().add(visit(ctx.expr()));
+		return unaryOpe;
+	}
+	
+	@Override
+	public AbstractNode visitVarNumUnary(VarNumUnaryContext ctx){
+		OperatorNode unaryOpe = new OperatorNode("-");
+		if (ctx.ID() != null) unaryOpe.getChildren().add(new VarNode(ctx.ID().getText()));
+		else {
+			unaryOpe.getChildren().add(new NumNode(Integer.valueOf(ctx.INT().getText())));
+		}
 		return unaryOpe;
 	}
 
@@ -193,7 +194,6 @@ public class Visitor extends ExprBaseVisitor<AbstractNode> {
 	 */
 	@Override
 	public AbstractNode visitOpcond(OpcondContext ctx) {
-		// TODO Auto-generated method stub
 		OperatorNode ope = new OperatorNode(ctx.ID().getText());
 		ope.getChildren().add(visit(ctx.bexp()));
 		return ope;
@@ -204,7 +204,6 @@ public class Visitor extends ExprBaseVisitor<AbstractNode> {
 	 */
 	@Override
 	public OperatorNode visitConst(ConstContext ctx) {
-		// TODO Auto-generated method stub
 		OperatorNode ope = new OperatorNode("is_const");
 		ope.getChildren().add(visit(ctx.expr()));
 		return ope;
@@ -215,7 +214,6 @@ public class Visitor extends ExprBaseVisitor<AbstractNode> {
 	 */
 	@Override
 	public OperatorNode visitDepends(DependsContext ctx) {
-		// TODO Auto-generated method stub
 		OperatorNode ope = new OperatorNode("depends");
 		ope.getChildren().add(visit(ctx.expr(0)));
 		ope.getChildren().add(visit(ctx.expr(1)));

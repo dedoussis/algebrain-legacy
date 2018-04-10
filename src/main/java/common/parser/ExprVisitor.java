@@ -1,4 +1,4 @@
-// Generated from Expr.g4 by ANTLR 4.7
+// Generated from Expr.g4 by ANTLR 4.7.1
 package common.parser;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -52,6 +52,13 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAddSub(ExprParser.AddSubContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code VarNumUnary}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVarNumUnary(ExprParser.VarNumUnaryContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Pow}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
@@ -66,12 +73,12 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitRule(ExprParser.RuleContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code unary}
+	 * Visit a parse tree produced by the {@code exprUnary}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitUnary(ExprParser.UnaryContext ctx);
+	T visitExprUnary(ExprParser.ExprUnaryContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code id}
 	 * labeled alternative in {@link ExprParser#expr}.
@@ -107,13 +114,6 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTruefalse(ExprParser.TruefalseContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code asto}
-	 * labeled alternative in {@link ExprParser#bexp}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAsto(ExprParser.AstoContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code andor}
 	 * labeled alternative in {@link ExprParser#bexp}.

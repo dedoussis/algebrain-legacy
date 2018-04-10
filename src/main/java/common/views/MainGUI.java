@@ -66,8 +66,6 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Scanner;
 import java.util.Stack;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -753,6 +751,7 @@ public class MainGUI extends JFrame {
 			case "transform":
 				try {
 					if (transCmbBox.getItemCount() != 0) {
+						// TODO Remove temp history
 						Transformation selectTr = (Transformation) transCmbBox.getSelectedItem();
 						Stack<AbstractNode> tempHist2 = (Stack<AbstractNode>) history.clone();
 						tempHist2.pop();

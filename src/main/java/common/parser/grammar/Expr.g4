@@ -14,7 +14,8 @@ expr: expr op='^' expr # Pow
 	| expr '=' expr ( ' if ' bexp)? # rule
 	| '(' expr ')' # parens
 	| '$' ID # dollar
-	| '-' expr # unary
+	| '-' (ID|INT) # VarNumUnary
+	| '-' expr # exprUnary
 	| op=ID '(' expr ((',') expr)* ')' # RuleOpe
 	| INT # int
 	| ID # id

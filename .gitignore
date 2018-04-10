@@ -16,3 +16,4 @@ local.properties
 .classpath
 algebrain.ini
 algebrain.iml
+.antlr
