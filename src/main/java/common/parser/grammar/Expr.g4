@@ -8,26 +8,26 @@ stat: expr NEWLINE # printExpr
 	| NEWLINE # blank
 	;
 
-expr: expr op='^' expr # Pow 
-	| expr op=('*'|'/') expr # MulDiv
-	| expr op=('+'|'-') expr # AddSub
-	| expr '=' expr ( ' if ' bexp)? # rule
-	| '(' expr ')' # parens
-	| '$' ID # dollar
-	| '-' (ID|INT) # VarNumUnary
-	| '-' expr # exprUnary
-	| op=ID '(' expr ((',') expr)* ')' # RuleOpe
-	| INT # int
-	| ID # id
+expr: expr op=POW expr # Pow 
+	| expr op=(MUL|DIV) expr # MulDiv
+	| expr op=(PLUS|MINUS) expr # AddSub
+	| expr EQUALS expr ( ' if ' bexp)? # Rule
+	| LPARENS expr RPARENS # Parens
+	| DOLLAR ID # Dollar
+	| MINUS val=(ID|INT) # VarNumUnary
+	| MINUS DOLLAR ID # DolUnary
+	| op=(ID|MINUS) LPARENS expr (COMMA expr)* RPARENS # Operator
+	| INT # Int
+	| ID # Id
 	;
 
 		
 bexp: bexp op=('AND'|'OR') bexp # andor
-	| ID '(' bexp ')' # opcond
-	| '(' expr '==' expr ')' # equality
+	| ID LPARENS bexp RPARENS # opcond
+	| LPARENS expr '==' expr RPARENS # equality
 	| ('TRUE'|'FALSE') # truefalse
-	| 'depends(' expr ',' expr ')' # depends
-	| 'is_const(' expr ')' # const
+	| 'depends' LPARENS expr COMMA expr RPARENS # depends
+	| 'is_const' LPARENS expr RPARENS # const
 	;
 
 
@@ -35,10 +35,15 @@ ID  : [a-zA-Z_]+ ; // match identifiers
 INT : [0-9]+ ; // match integers
 
 POW : '^' ;
-MUL : '*' ; // assigns token name to '*' used above in grammar
+MUL : '*' ;
 DIV : '/' ;
-ADD : '+' ;
-SUB : '-' ;
+PLUS : '+' ;
+MINUS : '-' ;
+DOLLAR: '$';
+LPARENS: '(';
+RPARENS: ')';
+COMMA: ',';
+EQUALS: '=';
 
 NEWLINE:'\r'? '\n' ; // return newlines to parser (is end-statement signal)
 WS : [ \t]+ -> skip ; 
