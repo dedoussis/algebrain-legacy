@@ -8,10 +8,10 @@ import common.parser.ExprParser.AndorContext;
 import common.parser.ExprParser.ConstContext;
 import common.parser.ExprParser.DependsContext;
 import common.parser.ExprParser.EqualityContext;
-import common.parser.ExprParser.ExprUnaryContext;
 import common.parser.ExprParser.OpcondContext;
 import common.parser.ExprParser.TruefalseContext;
 import common.parser.ExprParser.VarNumUnaryContext;
+import common.parser.ExprParser.DolUnaryContext;
 import common.system.domain.AbstractNode;
 import common.system.domain.DollarNode;
 import common.system.domain.NumNode;
@@ -21,8 +21,6 @@ import common.system.domain.VarNode;
 
 public class Visitor extends ExprBaseVisitor<AbstractNode> {
 
-	
-	
 	@Override
 	public AbstractNode visitPrintExpr(ExprParser.PrintExprContext ctx) {
 
@@ -99,7 +97,7 @@ public class Visitor extends ExprBaseVisitor<AbstractNode> {
 	}
 	
 	
-	public OperatorNode visitRuleOpe(ExprParser.RuleOpeContext ctx) {
+	public OperatorNode visitOperator(ExprParser.OperatorContext ctx) {
 
 		ArrayList<AbstractNode> children = new ArrayList<AbstractNode>();
 		OperatorNode ope = new OperatorNode(ctx.op.getText());
@@ -156,24 +154,26 @@ public class Visitor extends ExprBaseVisitor<AbstractNode> {
 		ope.getChildren().add(visit(ctx.expr(1)));
 		return ope;
 	}
-
-	@Override
-	public AbstractNode visitExprUnary(ExprUnaryContext ctx) {
-		OperatorNode unaryOpe = new OperatorNode("-");
-		unaryOpe.getChildren().add(visit(ctx.expr()));
-		return unaryOpe;
-	}
 	
 	@Override
 	public AbstractNode visitVarNumUnary(VarNumUnaryContext ctx){
 		OperatorNode unaryOpe = new OperatorNode("-");
 		if (ctx.ID() != null) unaryOpe.getChildren().add(new VarNode(ctx.ID().getText()));
-		else {
+		else if (ctx.INT() != null){
 			unaryOpe.getChildren().add(new NumNode(Integer.valueOf(ctx.INT().getText())));
+		}
+		else {
+
 		}
 		return unaryOpe;
 	}
 
+	@Override
+	public AbstractNode visitDolUnary(DolUnaryContext ctx){
+		OperatorNode unaryOpe = new OperatorNode("-");
+		unaryOpe.getChildren().add(new DollarNode(ctx.ID().getText()));
+		return unaryOpe;
+	}
 	/* (non-Javadoc)
 	 * @see common.parser.ExprBaseVisitor#visitTruefalse(common.parser.ExprParser.TruefalseContext)
 	 */
@@ -219,8 +219,4 @@ public class Visitor extends ExprBaseVisitor<AbstractNode> {
 		ope.getChildren().add(visit(ctx.expr(1)));
 		return ope;
 	}
-	
-	
-	
-	
 }

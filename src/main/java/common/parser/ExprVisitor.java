@@ -31,12 +31,19 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBlank(ExprParser.BlankContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code parens}
+	 * Visit a parse tree produced by the {@code Operator}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParens(ExprParser.ParensContext ctx);
+	T visitOperator(ExprParser.OperatorContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Dollar}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDollar(ExprParser.DollarContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code MulDiv}
 	 * labeled alternative in {@link ExprParser#expr}.
@@ -52,6 +59,13 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAddSub(ExprParser.AddSubContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Parens}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParens(ExprParser.ParensContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code VarNumUnary}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
@@ -66,47 +80,33 @@ public interface ExprVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitPow(ExprParser.PowContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code rule}
-	 * labeled alternative in {@link ExprParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRule(ExprParser.RuleContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code exprUnary}
-	 * labeled alternative in {@link ExprParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExprUnary(ExprParser.ExprUnaryContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code id}
+	 * Visit a parse tree produced by the {@code Id}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitId(ExprParser.IdContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code int}
+	 * Visit a parse tree produced by the {@code Rule}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRule(ExprParser.RuleContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code DolUnary}
+	 * labeled alternative in {@link ExprParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDolUnary(ExprParser.DolUnaryContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Int}
 	 * labeled alternative in {@link ExprParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitInt(ExprParser.IntContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code dollar}
-	 * labeled alternative in {@link ExprParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDollar(ExprParser.DollarContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code RuleOpe}
-	 * labeled alternative in {@link ExprParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitRuleOpe(ExprParser.RuleOpeContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code truefalse}
 	 * labeled alternative in {@link ExprParser#bexp}.
