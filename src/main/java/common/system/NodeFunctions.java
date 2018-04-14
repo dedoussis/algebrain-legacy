@@ -169,7 +169,7 @@ public class NodeFunctions {
 		}
 		else if (isDollar(node)){
 			DollarNode dollarNode = (DollarNode) node;
-			key = dollarNode.getKey();
+			key = "$" + dollarNode.getKey();
 		}
 		else if (isOperator(node)){
 			OperatorNode opeNode = (OperatorNode) node;
