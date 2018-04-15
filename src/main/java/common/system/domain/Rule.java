@@ -1,5 +1,7 @@
 package common.system.domain;
 
+import common.system.NodeFunctions;
+
 public final class Rule extends AbstractNode {
 	private AbstractNode lhs;
 	private AbstractNode rhs;
@@ -51,6 +53,25 @@ public final class Rule extends AbstractNode {
 	 */
 	public void setCondition(OperatorNode condition) {
 		this.condition = condition;
+	}
+	
+	@Override
+	public String toString(){
+		String conditionString;
+		if (this.getCondition()!=null) {
+			conditionString = " if ";
+			if (this.getCondition().getKey().matches("OR|AND")){
+				conditionString = conditionString + NodeFunctions.expression(this.getCondition().getChildren().get(0)) + " " + this.getCondition().getKey() + " " + NodeFunctions.expression(this.getCondition().getChildren().get(1)); 
+			}
+			else if(this.getCondition().getKey().matches("=")){
+				conditionString = conditionString + "("+ NodeFunctions.expression(this.getCondition().getChildren().get(0)) + "==" + NodeFunctions.expression(this.getCondition().getChildren().get(1)) +")"; 
+
+			}
+			else conditionString = conditionString + this.getCondition().getKey() +"(" + NodeFunctions.expression(this.getCondition().getChildren().get(0)) + ")";
+		}
+		else conditionString = "";
+
+		return NodeFunctions.expression(this.getLhs()) + "=" + NodeFunctions.expression(this.getRhs()) + conditionString;
 	}
 
 	

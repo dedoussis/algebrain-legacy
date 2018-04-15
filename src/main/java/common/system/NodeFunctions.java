@@ -28,7 +28,7 @@ public class NodeFunctions {
 	public static String expression(AbstractNode node){
 		String output = null;
 
-		if (isNum(node) || isVar(node) || isDollar(node)) { 
+		if (isNum(node) || isVar(node) || isDollar(node) || isRule(node)) { 
 			output = node.toString();
 		}
 		else if (isOperator(node)){
@@ -121,25 +121,6 @@ public class NodeFunctions {
 			if (opeNode.getKey().matches("=")) output = arrayOutput[0] + "==" + arrayOutput[childCount-1];
 			else output = arrayOutput[0] + opeNode.getKey() + arrayOutput[childCount-1];
 
-		}
-		else if(node instanceof Rule){
-			Rule ruleNode = (Rule) node;
-			String conditionString;
-			if (ruleNode.getCondition()!=null) {
-				conditionString = " if ";
-				if (ruleNode.getCondition().getKey().matches("OR|AND")){
-					conditionString = conditionString + expression(ruleNode.getCondition().getChildren().get(0)) + " " + ruleNode.getCondition().getKey() + " " + expression(ruleNode.getCondition().getChildren().get(1)); 
-				}
-				else if(ruleNode.getCondition().getKey().matches("=")){
-					conditionString = conditionString + "("+ expression(ruleNode.getCondition().getChildren().get(0)) + "==" + expression(ruleNode.getCondition().getChildren().get(1)) +")"; 
-
-				}
-				else conditionString = conditionString + ruleNode.getCondition().getKey() +"(" +expression(ruleNode.getCondition().getChildren().get(0)) + ")";
-			}
-			else conditionString = "";
-
-			output = expression(ruleNode.getLhs()) + "=" + expression(ruleNode.getRhs()) + conditionString;
-			return output;
 		}
 		else return "AbstractNode[]";
 		return output;
@@ -479,24 +460,25 @@ public class NodeFunctions {
 		else return node;
 
 	}
-
+	
+	
 	public static boolean isNum(AbstractNode node){
-		if (node instanceof NumNode) return true;
-		else return false;
+		return (node instanceof NumNode)? true : false;
 	}
 
 	public static boolean isVar(AbstractNode node){
-		if (node instanceof VarNode) return true;
-		else return false;
+		return (node instanceof VarNode)? true : false;
 	}
 
 	public static boolean isOperator(AbstractNode node){
-		if (node instanceof OperatorNode) return true;
-		else return false;
+		return (node instanceof OperatorNode)? true : false;
 	}
 
 	public static boolean isDollar(AbstractNode node){
-		if (node instanceof DollarNode) return true;
-		else return false;
+		return (node instanceof DollarNode)? true : false;
+	}
+	
+	public static boolean isRule(AbstractNode node){
+		return (node instanceof Rule)? true : false;
 	}
 }
