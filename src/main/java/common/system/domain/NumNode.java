@@ -16,6 +16,9 @@ public final class NumNode extends AbstractNode {
         return key;
     }
 
-
+    @Override
+    public String toString() {
+        return Integer.toString(this.getKey());
+    }
     
 }

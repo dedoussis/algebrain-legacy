@@ -13,16 +13,18 @@ public final class VarNode extends AbstractNode implements Comparable<VarNode> {
     }
 
     public String getKey() {
-        return key;
-    }
-
-	
+        return this.key;
+	}
+		
 	@Override
 	public int compareTo(VarNode o) {
-		// TODO Auto-generated method stub
 		return this.getKey().compareTo(o.getKey());
 	}
-    
+	
+	@Override
+	public String toString() {
+        return this.getKey();
+	}
     
 }
 

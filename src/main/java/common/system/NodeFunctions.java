@@ -28,18 +28,8 @@ public class NodeFunctions {
 	public static String expression(AbstractNode node){
 		String output = null;
 
-		if (isNum(node)) { 
-			NumNode numNode = (NumNode) node;
-			output = Integer.toString(numNode.getKey());
-
-		}
-		else if (isVar(node)){
-			VarNode varNode = (VarNode) node;
-			output = varNode.getKey();
-		}
-		else if (isDollar(node)){
-			DollarNode dollarNode = (DollarNode) node;
-			output="$"+dollarNode.getKey();
+		if (isNum(node) || isVar(node) || isDollar(node)) { 
+			output = node.toString();
 		}
 		else if (isOperator(node)){
 			boolean parens=false;
@@ -162,17 +152,8 @@ public class NodeFunctions {
 
 	private static String tree(String prefix, AbstractNode node, boolean isTail, String yetOutput) {
 		String key=null;
-		if (isNum(node)) { 
-			NumNode numNode = (NumNode) node;
-			key = Integer.toString(numNode.getKey());
-		}
-		else if (isVar(node)){
-			VarNode varNode = (VarNode) node;
-			key = varNode.getKey();
-		}
-		else if (isDollar(node)){
-			DollarNode dollarNode = (DollarNode) node;
-			key = "$" + dollarNode.getKey();
+		if (isNum(node) || isVar(node) || isDollar(node)) { 
+			key = node.toString();
 		}
 		else if (isOperator(node)){
 			OperatorNode opeNode = (OperatorNode) node;

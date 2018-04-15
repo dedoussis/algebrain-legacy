@@ -16,12 +16,6 @@ public final class DollarNode extends AbstractNode implements Comparable<DollarN
         return key;
     }
 
-
-
-	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -30,10 +24,6 @@ public final class DollarNode extends AbstractNode implements Comparable<DollarN
 		return result;
 	}
 	
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -51,16 +41,15 @@ public final class DollarNode extends AbstractNode implements Comparable<DollarN
 		return true;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
-	 */
 	@Override
 	public int compareTo(DollarNode o) {
-		// TODO Auto-generated method stub
 		return this.getKey().compareTo(o.getKey());
 	}
 	
-	
+	@Override
+	public String toString() {
+        return "$" + this.getKey();
+    }
 
 }
 
