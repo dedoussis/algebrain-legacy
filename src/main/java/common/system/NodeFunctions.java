@@ -88,17 +88,12 @@
                     }
                     break;
                 default:
-                    for (int i=0; i<childCount; i++) {
-                        arrayOutput[i] = expression(children.get(i));
+                    output = opeNode.getKey() +"(";
+                    for (AbstractNode child : opeNode.getChildren()) {
+                        output += NodeFunctions.expression(child) + ',';
                     }
-                    arrayOutput[0] = "(" + arrayOutput[0];
-                    arrayOutput[childCount-1] = arrayOutput[childCount-1] + ")";
-                    output =  opeNode.getKey();
-
-                    for (int i=0; i<childCount; i++){
-                        if (i==0) output = output + arrayOutput[i];
-                        else output = output + "," + arrayOutput[i];
-                    }
+                    if(output.endsWith(",")) output = output.substring(0,output.length() - 1);
+                    output += ")";
                     return output;
                 }
 
