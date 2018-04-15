@@ -68,7 +68,7 @@ public class NodeFunctions {
 						OperatorNode opeChild = (OperatorNode) children.get(0);
 						if (opeChild.getKey().matches("[\\-\\+]")) return "-(" + arrayOutput[0] + ")";
 					}
-					else return "-" + arrayOutput[0];
+					return "-" + arrayOutput[0];
 				}
 				else if (childCount==2){
 					if (isOperator(children.get(1))){
