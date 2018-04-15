@@ -118,8 +118,7 @@ public class NodeFunctions {
 				return output;
 			}
 
-			if (opeNode.getKey().matches("=")) output = arrayOutput[0] + "==" + arrayOutput[childCount-1];
-			else output = arrayOutput[0] + opeNode.getKey() + arrayOutput[childCount-1];
+			output = arrayOutput[0] + opeNode.getKey() + arrayOutput[childCount-1];
 
 		}
 		else return "AbstractNode[]";
@@ -133,7 +132,7 @@ public class NodeFunctions {
 
 	private static String tree(String prefix, AbstractNode node, boolean isTail, String yetOutput) {
 		String key=null;
-		if (isNum(node) || isVar(node) || isDollar(node)) { 
+		if (isNum(node) || isVar(node) || isDollar(node) || isRule(node)) { 
 			key = node.toString();
 		}
 		else if (isOperator(node)){

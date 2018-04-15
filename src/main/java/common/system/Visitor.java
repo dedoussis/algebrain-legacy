@@ -149,7 +149,7 @@ public class Visitor extends ExprBaseVisitor<AbstractNode> {
 	 */
 	@Override
 	public AbstractNode visitEquality(EqualityContext ctx) {
-		OperatorNode ope = new OperatorNode("=");
+		OperatorNode ope = new OperatorNode("==");
 		ope.getChildren().add(visit(ctx.expr(0)));
 		ope.getChildren().add(visit(ctx.expr(1)));
 		return ope;
