@@ -23,11 +23,11 @@ expr: expr op=POW expr # Pow
 
 		
 bexp: bexp op=('AND'|'OR') bexp # andor
+	| 'depends' LPARENS expr ',' expr RPARENS # depends
+	| 'is_const' LPARENS expr RPARENS # const
 	| ID LPARENS bexp RPARENS # opcond
 	| LPARENS expr EQUALS EQUALS expr RPARENS # equality
 	| ('TRUE'|'FALSE') # truefalse
-	| 'depends' LPARENS expr COMMA expr RPARENS # depends
-	| 'is_const' LPARENS expr RPARENS # const
 	;
 
 

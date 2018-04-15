@@ -29,7 +29,7 @@
             String output = null;
 
             if (isNum(node) || isVar(node) || isDollar(node) || isRule(node)) {
-                output = node.toString();
+                return node.toString();
             }
             else if (isOperator(node)){
                 boolean parens=false;
@@ -185,7 +185,6 @@
                         HashMap<DollarNode,AbstractNode> childMap = match(opeLhs.getChildren().get(i), opeNode.getChildren().get(i));
                         HashMap<DollarNode,AbstractNode> childMapTemp = match(opeLhs.getChildren().get(i), opeNode.getChildren().get(i));
 
-
                         if (childMap==null) return null;
                         else{
                             Set<DollarNode> sameSet = childMapTemp.keySet();
@@ -206,8 +205,6 @@
                 }
                 else return null;
             }
-
-
 
             return null;
 

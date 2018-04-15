@@ -61,9 +61,16 @@ public final class Rule extends AbstractNode {
 		if (this.getCondition()!=null) {
 			conditionString = " if ";
 			if (this.getCondition().getKey().matches("OR|AND|==")){
-				conditionString = conditionString + NodeFunctions.expression(this.getCondition().getChildren().get(0)) + " " + this.getCondition().getKey() + " " + NodeFunctions.expression(this.getCondition().getChildren().get(1)); 
+				conditionString += NodeFunctions.expression(this.getCondition().getChildren().get(0)) + " " + this.getCondition().getKey() + " " + NodeFunctions.expression(this.getCondition().getChildren().get(1));
 			}
-			else conditionString = conditionString + this.getCondition().getKey() +"(" + NodeFunctions.expression(this.getCondition().getChildren().get(0)) + ")";
+			else {
+				conditionString += this.getCondition().getKey() +"(";
+				for (AbstractNode child : this.getCondition().getChildren()) {
+					conditionString += NodeFunctions.expression(child) + ',';
+				}
+				if(conditionString.endsWith(",")) conditionString = conditionString.substring(0,conditionString.length() - 1);
+				conditionString += ")";
+			}
 		}
 		else conditionString = "";
 
