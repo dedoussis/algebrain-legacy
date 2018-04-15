@@ -50,31 +50,34 @@ public class NodeFunctions {
 			switch (opeNode.getKey()){
 			case "+":
 				for (int i=0; i<childCount; i++) {
+					parens = false;
 					if (isOperator(children.get(i))){
 
 						OperatorNode opeChildNode = (OperatorNode) children.get(i);
-						if (i!=0 && opeChildNode.getKey().matches("[\\-]") && opeChildNode.getChildren().size()==1){
-							if (opeChildNode.getKey().matches("[\\-\\+\\/]")) parens=true;
-						}
+						if (i!=0 && opeChildNode.getKey().matches("[\\-]") && opeChildNode.getChildren().size()==1) parens = true;
 					}
-					if (parens) {arrayOutput[i] = "(" + expression(children.get(i)) + ")"; parens=false;}
+					if (parens) { arrayOutput[i] = "(" + expression(children.get(i)) + ")"; }
 					else arrayOutput[i] = expression(children.get(i));
 				}
 				break;
 			case "-":
 				arrayOutput[0] = expression(children.get(0));
 
-
-				if (childCount==2){
+				if (childCount==1) {
+					if (isOperator(children.get(0))){
+						OperatorNode opeChild = (OperatorNode) children.get(0);
+						if (opeChild.getKey().matches("[\\-\\+]")) return "-(" + arrayOutput[0] + ")";
+					}
+					else return "-" + arrayOutput[0];
+				}
+				else if (childCount==2){
 					if (isOperator(children.get(1))){
 						OperatorNode opeChild1 = (OperatorNode) children.get(1);
 						if (opeChild1.getKey().matches("[\\-\\+]")) parens=true;
 					}
-					if (parens) {arrayOutput[1] = "(" + expression(children.get(1)) + ")"; parens=false;}
+					if (parens) { arrayOutput[1] = "(" + expression(children.get(1)) + ")"; }
 					else arrayOutput[1] = expression(children.get(1));
 				}
-				else return "-" + arrayOutput[0];
-
 				break;
 			case "*":
 				for (int i=0; i<childCount; i++) {
