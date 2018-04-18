@@ -25,6 +25,10 @@ Runnable JAR for distribution:
 ``` bash
 # Create a runnable JAR and install it in your local repository
 mvn install
+
+# Run JAR from target dir - Make sure you modify the version number!
+cd target
+java -jar algebrain-X.X-SNAPSHOT-jar-with-dependencies.jar
 ```
 
 ## Run Unit Tests
